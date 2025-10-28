@@ -150,8 +150,23 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            }
+            
             .hero-title {
                 font-size: 2rem;
+                line-height: 1.2;
+            }
+            
+            .hero-title div {
+                text-align: center;
+                background: linear-gradient(45deg, #ff7300, #ffed4e, #ffd700);
+                background-size: 200% 200%;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                animation: gradientShift 3s ease-in-out infinite;
             }
             
             .glass-card {
@@ -168,8 +183,9 @@
         <div class="w-full max-w-2xl">
             <!-- 主标题区域 -->
             <div class="text-center mb-12 fade-in">
-                <h1 class="hero-title text-5xl md:text-6xl font-bold mb-4">
-                    CPA创新人才培养计划
+                <h1 class="hero-title text-5xl md:text-6xl font-bold mb-4 text-center">
+                    <div>CPA创新人才</div>
+                    <div>培养计划</div>
                 </h1>
                 <!-- <h2 class="text-2xl md:text-3xl text-white font-light mb-2">
                     学习旅程
@@ -232,9 +248,9 @@
                         <h3 class="text-2xl text-white font-medium mb-2">
                             <span id="displayName"></span> 的学习旅程
                         </h3>
-                        <p class="text-gray-400">
-                            这是你今年的学习成长足迹
-                        </p>
+                        <!-- <p class="text-gray-400">
+                            这是你的学习成长足迹
+                        </p> -->
                     </div>
 
                     <div class="mb-8">

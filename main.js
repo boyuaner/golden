@@ -389,7 +389,7 @@ function showResultState() {
     });
     
     // 成功提示
-    showNotification('年终总结加载成功！', 'success');
+    showNotification('学习旅程加载成功！', 'success');
 }
 
 // 显示错误状态
@@ -474,7 +474,7 @@ function handleDownload() {
         // 创建下载链接
         const link = document.createElement('a');
         link.href = resultImage.src;
-        link.download = `${displayName}的年终总结.png`;
+        link.download = `${displayName}的学习旅程.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
