@@ -26,7 +26,7 @@
 
         .hero-title {
             font-family: 'Noto Serif SC', serif;
-            background: linear-gradient(45deg, #ff7300, #ffed4e, #ffd700);
+            background: linear-gradient(45deg, #ff7300, #f88d12, #f0b71c);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -134,9 +134,9 @@
         }
 
         .success-message {
-            color: #51cf66;
-            background: rgba(81, 207, 102, 0.1);
-            border: 1px solid rgba(81, 207, 102, 0.3);
+            color: #ffffff;
+            background: rgba(236, 178, 20, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
             padding: 15px;
             margin: 20px 0;
@@ -151,7 +151,11 @@
 
         @media (max-width: 768px) {
             body {
-                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+            }
+
+            html {
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
             }
             
             .hero-title {
@@ -161,7 +165,7 @@
             
             .hero-title div {
                 text-align: center;
-                background: linear-gradient(45deg, #ff7300, #ffed4e, #ffd700);
+                background: linear-gradient(45deg, #ff7300, #f88d12, #f0b71c);
                 background-size: 200% 200%;
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -244,13 +248,13 @@
 
                 <!-- 结果展示区域 -->
                 <div id="resultSection" class="text-center hidden">
-                    <div class="mb-6">
-                        <h3 class="text-2xl text-white font-medium mb-2">
-                            <span id="displayName"></span> 的学习旅程
-                        </h3>
+                    <div class="mb-6 hidden">
                         <!-- <p class="text-gray-400">
                             这是你的学习成长足迹
                         </p> -->
+                        <h3 class="text-2xl text-white font-medium mb-2">
+                            <span id="displayName"></span>
+                        </h3>
                     </div>
 
                     <div class="mb-8">
