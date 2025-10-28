@@ -34,31 +34,36 @@ function initParticleBackground() {
         };
         
         p.draw = () => {
-            // 绘制背景渐变 - 使用更高效的方法
-            p.noStroke();
-            p.noFill();
+            // 检测是否为移动设备
+            const isMobile = p.windowWidth < 768 || /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
-            // 创建渐变背景
-            for (let i = 0; i <= p.height; i++) {
-                const t = i / p.height;
-                let r, g, b;
+            if (isMobile) {
+                // 移动端：使用透明背景，让CSS渐变显示
+                p.clear();
+            } else {
+                // 桌面端：使用p5.js绘制渐变背景
+                p.noStroke();
+                const stepSize = Math.max(1, Math.floor(p.height / 200));
                 
-                if (t <= 0.5) {
-                    // 上半部分：从 #1a1a2e 到 #16213e
-                    const localT = t * 2;
-                    r = p.lerp(26, 22, localT);
-                    g = p.lerp(26, 33, localT);
-                    b = p.lerp(46, 62, localT);
-                } else {
-                    // 下半部分：从 #16213e 到 #0f3460
-                    const localT = (t - 0.5) * 2;
-                    r = p.lerp(22, 15, localT);
-                    g = p.lerp(33, 52, localT);
-                    b = p.lerp(62, 96, localT);
+                for (let i = 0; i <= p.height; i += stepSize) {
+                    const t = i / p.height;
+                    let r, g, b;
+                    
+                    if (t <= 0.5) {
+                        const localT = t * 2;
+                        r = p.lerp(26, 22, localT);
+                        g = p.lerp(26, 33, localT);
+                        b = p.lerp(46, 62, localT);
+                    } else {
+                        const localT = (t - 0.5) * 2;
+                        r = p.lerp(22, 15, localT);
+                        g = p.lerp(33, 52, localT);
+                        b = p.lerp(62, 96, localT);
+                    }
+                    
+                    p.fill(r, g, b);
+                    p.rect(0, i, p.width, stepSize);
                 }
-                
-                p.stroke(r, g, b);
-                p.line(0, i, p.width, i);
             }
             
             // 更新和绘制粒子
