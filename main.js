@@ -408,18 +408,16 @@ function showResultState() {
         easing: 'easeOutQuart'
     });
     
-    // 图片动画
+    // 图片动画 - 透明度渐变
     anime({
         targets: '#resultImage',
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        duration: 1000,
+        opacity: [0.7, 1],
+        duration: 500,
         delay: 300,
-        easing: 'easeOutElastic(1, .8)'
+        easing: 'easeOutQuart'
     });
     
-    // 成功提示
-    showNotification('学习旅程加载成功！', 'success');
+    // 图片动画完成，不显示成功提示
 }
 
 // 显示错误状态
