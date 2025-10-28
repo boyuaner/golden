@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOLDEN 年终总结 - 学生专属回顾</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .hero-title {
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            outline: none;
+        }
+
+        .golden-button {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .golden-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .golden-button:active {
+            transform: translateY(0);
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #ffd700;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .result-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .error-message {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .success-message {
+            color: #51cf66;
+            background: rgba(81, 207, 102, 0.1);
+            border: 1px solid rgba(81, 207, 102, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .loading-text {
+            color: #ffd700;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .glass-card {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle-bg" id="particleCanvas"></div>
+    
+    <div class="content-wrapper min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl">
+            <!-- 主标题区域 -->
+            <div class="text-center mb-12 fade-in">
+                <h1 class="hero-title text-5xl md:text-6xl font-bold mb-4">
+                    GOLDEN
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-white font-light mb-2">
+                    年终总结
+                </h2>
+                <p class="text-gray-300 text-lg">
+                    专属你的学习成长回顾
+                </p>
+            </div>
+
+            <!-- 主要内容区域 -->
+            <div class="glass-card rounded-3xl p-8 md:p-12 fade-in" style="animation-delay: 0.3s;">
+                <!-- 初始状态 - 输入表单 -->
+                <div id="inputSection" class="text-center">
+                    <div class="mb-8">
+                        <i class="fas fa-user-graduate text-6xl text-yellow-400 mb-4"></i>
+                        <h3 class="text-2xl text-white font-medium mb-4">
+                            请输入你的姓名
+                        </h3>
+                        <p class="text-gray-400 text-sm">
+                            我们将为你生成专属的年终总结报告
+                        </p>
+                    </div>
+
+                    <form id="nameForm" class="space-y-6">
+                        <div class="relative">
+                            <input 
+                                type="text" 
+                                id="studentName" 
+                                placeholder="例如：张小明"
+                                class="input-field w-full px-6 py-4 rounded-2xl text-white text-lg placeholder-gray-400"
+                                required
+                            >
+                            <i class="fas fa-user absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        </div>
+
+                        <button 
+                            type="submit" 
+                            class="golden-button w-full py-4 px-8 rounded-2xl text-gray-800 font-semibold text-lg"
+                        >
+                            <i class="fas fa-search mr-2"></i>
+                            生成我的年终总结
+                        </button>
+                    </form>
+                </div>
+
+                <!-- 加载状态 -->
+                <div id="loadingSection" class="text-center hidden">
+                    <div class="mb-8">
+                        <div class="loader mx-auto mb-6"></div>
+                        <div class="loading-text">
+                            <p class="text-xl font-medium mb-2">正在生成您的专属年终总结...</p>
+                            <p class="text-sm text-gray-400">请稍候，精彩内容即将呈现</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 结果展示区域 -->
+                <div id="resultSection" class="text-center hidden">
+                    <div class="mb-6">
+                        <h3 class="text-2xl text-white font-medium mb-2">
+                            <span id="displayName"></span> 的年终总结
+                        </h3>
+                        <p class="text-gray-400">
+                            这是你今年的学习成长足迹
+                        </p>
+                    </div>
+
+                    <div class="mb-8">
+                        <img 
+                            id="resultImage" 
+                            src="" 
+                            alt="年终总结图片" 
+                            class="result-image mx-auto"
+                            onerror="handleImageError()"
+                        >
+                    </div>
+
+                    <div class="space-y-4">
+                        <button 
+                            id="downloadBtn" 
+                            class="golden-button w-full py-3 px-6 rounded-2xl text-gray-800 font-semibold"
+                        >
+                            <i class="fas fa-download mr-2"></i>
+                            下载年终总结
+                        </button>
+                        
+                        <button 
+                            id="backBtn" 
+                            class="w-full py-3 px-6 rounded-2xl border-2 border-white text-white font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
+                        >
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            返回重新查询
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 错误提示区域 -->
+                <div id="errorSection" class="text-center hidden">
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                        <h3 class="text-xl font-medium mb-2">抱歉，未找到您的年终总结</h3>
+                        <p class="text-sm mb-4">
+                            可能的原因：<br>
+                            • 姓名输入有误<br>
+                            • 您的年终总结尚未生成<br>
+                            • 请联系教务老师确认信息
+                        </p>
+                    </div>
+
+                    <button 
+                        id="retryBtn" 
+                        class="golden-button w-full py-3 px-6 rounded-2xl text-gray-800 font-semibold"
+                    >
+                        <i class="fas fa-redo mr-2"></i>
+                        重新查询
+                    </button>
+                </div>
+            </div>
+
+            <!-- 页脚 -->
+            <div class="text-center mt-8 fade-in" style="animation-delay: 0.6s;">
+                <p class="text-gray-500 text-sm">
+                    © 2024 GOLDEN 教培机构 | 用心教育，成就未来
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
