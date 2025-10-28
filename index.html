@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GOLDEN 年终总结 - 学生专属回顾</title>
+    <title>CPA创新人才培养计划 学习旅程 - 学生专属回顾</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -26,7 +26,7 @@
 
         .hero-title {
             font-family: 'Noto Serif SC', serif;
-            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            background: linear-gradient(45deg, #ff7300, #ffed4e, #ffd700);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -54,13 +54,13 @@
 
         .input-field:focus {
             background: rgba(255, 255, 255, 0.2);
-            border-color: #ffd700;
+            border-color: #fa8f03;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
             outline: none;
         }
 
         .golden-button {
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            background: linear-gradient(45deg, #ffc400, #fa8f03);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -79,7 +79,7 @@
             width: 50px;
             height: 50px;
             border: 3px solid rgba(255, 255, 255, 0.3);
-            border-top: 3px solid #ffd700;
+            border-top: 3px solid #fa8f03;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -169,13 +169,13 @@
             <!-- 主标题区域 -->
             <div class="text-center mb-12 fade-in">
                 <h1 class="hero-title text-5xl md:text-6xl font-bold mb-4">
-                    GOLDEN
+                    CPA创新人才培养计划
                 </h1>
-                <h2 class="text-2xl md:text-3xl text-white font-light mb-2">
-                    年终总结
-                </h2>
+                <!-- <h2 class="text-2xl md:text-3xl text-white font-light mb-2">
+                    学习旅程
+                </h2> -->
                 <p class="text-gray-300 text-lg">
-                    专属你的学习成长回顾
+                    回顾你的学习旅程
                 </p>
             </div>
 
@@ -184,12 +184,12 @@
                 <!-- 初始状态 - 输入表单 -->
                 <div id="inputSection" class="text-center">
                     <div class="mb-8">
-                        <i class="fas fa-user-graduate text-6xl text-yellow-400 mb-4"></i>
+                        <i class="fas fa-user-graduate text-6xl text-orange-400 mb-4"></i>
                         <h3 class="text-2xl text-white font-medium mb-4">
                             请输入你的姓名
                         </h3>
                         <p class="text-gray-400 text-sm">
-                            我们将为你生成专属的年终总结报告
+                            我们将为你生成专属的学习旅程报告
                         </p>
                     </div>
 
@@ -210,7 +210,7 @@
                             class="golden-button w-full py-4 px-8 rounded-2xl text-gray-800 font-semibold text-lg"
                         >
                             <i class="fas fa-search mr-2"></i>
-                            生成我的年终总结
+                            查看我的学习旅程
                         </button>
                     </form>
                 </div>
@@ -220,7 +220,7 @@
                     <div class="mb-8">
                         <div class="loader mx-auto mb-6"></div>
                         <div class="loading-text">
-                            <p class="text-xl font-medium mb-2">正在生成您的专属年终总结...</p>
+                            <p class="text-xl font-medium mb-2">正在回顾您的学习旅程...</p>
                             <p class="text-sm text-gray-400">请稍候，精彩内容即将呈现</p>
                         </div>
                     </div>
@@ -230,7 +230,7 @@
                 <div id="resultSection" class="text-center hidden">
                     <div class="mb-6">
                         <h3 class="text-2xl text-white font-medium mb-2">
-                            <span id="displayName"></span> 的年终总结
+                            <span id="displayName"></span> 的学习旅程
                         </h3>
                         <p class="text-gray-400">
                             这是你今年的学习成长足迹
@@ -243,7 +243,6 @@
                             src="" 
                             alt="年终总结图片" 
                             class="result-image mx-auto"
-                            onerror="handleImageError()"
                         >
                     </div>
 
@@ -292,7 +291,7 @@
             <!-- 页脚 -->
             <div class="text-center mt-8 fade-in" style="animation-delay: 0.6s;">
                 <p class="text-gray-500 text-sm">
-                    © 2024 GOLDEN 教培机构 | 用心教育，成就未来
+                    © 成为创新型财经人才，掌握选择未来自主权
                 </p>
             </div>
         </div>

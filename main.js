@@ -244,27 +244,121 @@ function showLoadingState(studentName) {
 }
 
 // 加载学生报告
-function loadStudentReport(studentName) {
-    const imageUrl = `https://goldencpa.oss-cn-beijing.aliyuncs.com/img/${encodeURIComponent(studentName)}.png`;
+function loadStudentReport(studentName, retryCount = 0) {
+    const imageUrl = `https://goldencpa.oss-cn-shanghai.aliyuncs.com/${encodeURIComponent(studentName)}.jpg`;
     const resultImage = document.getElementById('resultImage');
     const displayName = document.getElementById('displayName');
     
-    // 预加载图片
-    const img = new Image();
+    console.log(`开始加载图片 (尝试 ${retryCount + 1}/3):`, imageUrl);
     
-    img.onload = () => {
-        // 图片加载成功
-        resultImage.src = imageUrl;
-        displayName.textContent = studentName;
+    // 调试图片URL
+    debugImageUrl(imageUrl);
+    
+    // 设置显示名称
+    displayName.textContent = studentName;
+    
+    // 清除之前的事件监听器
+    resultImage.onload = null;
+    resultImage.onerror = null;
+    
+    // 设置超时处理，防止长时间无响应
+    const timeout = setTimeout(() => {
+        console.log('图片加载超时:', imageUrl);
+        if (!resultImage.complete) {
+            handleImageLoadFailure(studentName, retryCount);
+        }
+    }, 10000); // 10秒超时
+    
+    // 添加图片加载成功事件监听
+    resultImage.onload = () => {
+        clearTimeout(timeout);
+        console.log('图片加载成功:', imageUrl);
         showResultState();
     };
     
-    img.onerror = () => {
-        // 图片加载失败
-        showErrorState();
+    // 添加图片加载失败事件监听
+    resultImage.onerror = () => {
+        clearTimeout(timeout);
+        console.log('图片加载失败:', imageUrl);
+        handleImageLoadFailure(studentName, retryCount);
     };
     
-    img.src = imageUrl;
+    // 直接设置图片源，让浏览器处理加载
+    resultImage.src = imageUrl;
+}
+
+// 处理图片加载失败
+function handleImageLoadFailure(studentName, retryCount) {
+    const maxRetries = 2;
+    
+    if (retryCount < maxRetries) {
+        console.log(`图片加载失败，准备重试 (${retryCount + 1}/${maxRetries + 1})`);
+        
+        // 检查网络状态
+        checkNetworkStatus();
+        
+        // 显示重试提示
+        showNotification(`图片加载失败，正在重试... (${retryCount + 1}/${maxRetries + 1})`, 'error');
+        
+        // 延迟重试
+        setTimeout(() => {
+            loadStudentReport(studentName, retryCount + 1);
+        }, 2000);
+    } else {
+        console.log('图片加载失败，已达到最大重试次数');
+        showErrorState();
+    }
+}
+
+// 检查网络状态
+function checkNetworkStatus() {
+    if (!navigator.onLine) {
+        console.log('网络连接已断开');
+        showNotification('网络连接已断开，请检查网络设置', 'error');
+        return false;
+    }
+    
+    // 尝试访问一个简单的资源来测试网络
+    fetch('https://goldencpa.oss-cn-shanghai.aliyuncs.com/', { 
+        method: 'HEAD',
+        mode: 'no-cors'
+    }).then(() => {
+        console.log('网络连接正常');
+    }).catch((error) => {
+        console.log('网络连接可能有问题:', error);
+        showNotification('网络连接可能有问题，请检查网络设置', 'error');
+    });
+    
+    return true;
+}
+
+// 调试函数：检查图片URL是否可访问
+function debugImageUrl(imageUrl) {
+    console.log('=== 图片URL调试信息 ===');
+    console.log('图片URL:', imageUrl);
+    console.log('URL编码:', encodeURIComponent(imageUrl));
+    
+    // 检查URL格式
+    try {
+        const url = new URL(imageUrl);
+        console.log('URL解析成功:', {
+            protocol: url.protocol,
+            hostname: url.hostname,
+            pathname: url.pathname
+        });
+    } catch (error) {
+        console.log('URL解析失败:', error);
+    }
+    
+    // 尝试使用fetch检查资源
+    fetch(imageUrl, { 
+        method: 'HEAD',
+        mode: 'no-cors'
+    }).then(() => {
+        console.log('图片资源可访问');
+    }).catch((error) => {
+        console.log('图片资源不可访问:', error);
+    });
 }
 
 // 显示结果状态
